@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import AOS from "aos"
 import "aos/dist/aos.css"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 import Nav from "./Nav.jsx"
 import Home from "./Home.jsx"
@@ -26,6 +27,7 @@ function App() {
             <Planos />
             <Contact />
             <Footer />
+            <SpeedInsights />
         </>
     )
 }
