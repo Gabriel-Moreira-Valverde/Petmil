@@ -1,10 +1,4 @@
-const FOOTER_LINKS = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Servicos", href: "#servicos" },
-  { label: "Patrocinio", href: "#patrocinios" },
-  { label: "Planos", href: "#planos" },
-  { label: "Contato", href: "#contato" },
-];
+import { useLanguage } from "../context/LanguageContext";
 
 const SOCIAL_LINKS = [
   { label: "Instagram", href: "https://instagram.com", icon: "/instagram.svg" },
@@ -13,6 +7,7 @@ const SOCIAL_LINKS = [
 ];
 
 function Footer() {
+  const { t } = useLanguage();
   const year = new Date().getFullYear();
 
   return (
@@ -27,23 +22,22 @@ function Footer() {
               <img src="/Logo.png" alt="Logo Petmil" className="h-10 w-10" />
               <span className="text-2xl font-bold tracking-wide">Petmil</span>
             </a>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/65">
-              Banho, tosa e bem-estar com atendimento cuidadoso para deixar seu pet limpo, tranquilo e
-              feliz.
-            </p>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/65">{t.footer.description}</p>
             <a
               href="#contato"
               className="mt-6 inline-flex rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-green-500"
             >
-              Agendar horario
+              {t.footer.scheduleCta}
             </a>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/75">Navegacao</h3>
-            <nav aria-label="Rodape" className="mt-4">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/75">
+              {t.footer.navigationTitle}
+            </h3>
+            <nav aria-label={t.footer.navigationTitle} className="mt-4">
               <ul className="space-y-2.5 text-sm text-white/70">
-                {FOOTER_LINKS.map((item) => (
+                {t.footer.links.map((item) => (
                   <li key={item.href}>
                     <a href={item.href} className="transition-colors duration-300 hover:text-white">
                       {item.label}
@@ -55,7 +49,7 @@ function Footer() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/75">Redes</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/75">{t.footer.socialTitle}</h3>
             <div className="mt-4 flex items-center gap-3">
               {SOCIAL_LINKS.map((social) => (
                 <a
@@ -70,15 +64,15 @@ function Footer() {
                 </a>
               ))}
             </div>
-            <p className="mt-6 text-sm text-white/65">Sao Paulo, Brasil</p>
+            <p className="mt-6 text-sm text-white/65">{t.footer.location}</p>
             <p className="mt-1 text-sm text-white/65">(11) 99999-9999</p>
             <p className="mt-1 text-sm text-white/65">contato@petmil.com</p>
           </div>
         </div>
 
         <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-5 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
-          <p>Â© {year} Petmil. Todos os direitos reservados.</p>
-          <p>Feito para pets felizes.</p>
+          <p>© {year} Petmil. {t.footer.rights}</p>
+          <p>{t.footer.tagline}</p>
         </div>
       </div>
     </footer>

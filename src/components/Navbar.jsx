@@ -1,19 +1,18 @@
 import { useState } from "react";
 import { useSound } from "../context/SoundContext";
-
-const NAV_ITEMS = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Servicos", href: "#servicos" },
-  { label: "Patrocinio", href: "#patrocinios" },
-  { label: "Planos", href: "#planos" },
-  { label: "Contato", href: "#contato" },
-];
+import { useLanguage } from "../context/LanguageContext";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { enabled, toggleSound } = useSound();
+  const { t, isEnglish, toggleLanguage } = useLanguage();
 
   const closeMobileMenu = () => setIsOpen(false);
+
+  const languageShort = isEnglish ? t.languageToggle.portugueseShort : t.languageToggle.englishShort;
+  const languageAria = isEnglish
+    ? t.languageToggle.switchToPortuguese
+    : t.languageToggle.switchToEnglish;
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#191D19]/80 backdrop-blur-xl">
@@ -25,7 +24,7 @@ function Navbar() {
           </a>
 
           <ul className="hidden items-center gap-8 text-sm font-medium text-white/75 lg:flex">
-            {NAV_ITEMS.map((item) => (
+            {t.nav.items.map((item) => (
               <li key={item.href} className="group relative">
                 <a href={item.href} className="transition-colors duration-300 hover:text-white">
                   {item.label}
@@ -38,9 +37,18 @@ function Navbar() {
           <div className="flex items-center gap-2">
             <button
               type="button"
+              onClick={toggleLanguage}
+              aria-label={languageAria}
+              className="inline-flex h-10 items-center justify-center gap-1.5 rounded-lg border border-white/15 px-2.5 text-sm font-semibold text-white transition hover:border-white/30 hover:bg-white/5"
+            >
+              <span>{languageShort}</span>
+            </button>
+
+            <button
+              type="button"
               data-sound-off
               onClick={toggleSound}
-              aria-label={enabled ? "Desativar som" : "Ativar som"}
+              aria-label={enabled ? t.nav.soundOn : t.nav.soundOff}
               className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 text-white transition hover:border-white/30 hover:bg-white/5"
             >
               {enabled ? (
@@ -95,18 +103,18 @@ function Navbar() {
                 href="#contato"
                 className="rounded-lg bg-green-600 px-7 py-2 font-semibold text-white shadow-lg transition-all duration-300 hover:bg-white hover:text-green-600 hover:shadow-green-500/30"
               >
-                Agendar
+                {t.nav.bookCta}
               </a>
             </div>
 
             <button
               type="button"
-              aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+              aria-label={isOpen ? t.nav.menuClose : t.nav.menuOpen}
               aria-expanded={isOpen}
               onClick={() => setIsOpen((prev) => !prev)}
               className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 text-white transition hover:border-white/30 hover:bg-white/5 lg:hidden"
             >
-              <span className="sr-only">Menu</span>
+              <span className="sr-only">{t.nav.menuSr}</span>
               <svg viewBox="0 0 24 24" className="h-5 w-5">
                 {isOpen ? (
                   <path
@@ -136,7 +144,7 @@ function Navbar() {
       >
         <div className="mx-auto max-w-7xl px-6 py-4">
           <ul className="space-y-2 text-sm font-medium text-white/85">
-            {NAV_ITEMS.map((item) => (
+            {t.nav.items.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
@@ -154,7 +162,7 @@ function Navbar() {
             onClick={closeMobileMenu}
             className="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-green-600 px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-green-500"
           >
-            Agendar
+            {t.nav.bookCta}
           </a>
         </div>
       </div>
