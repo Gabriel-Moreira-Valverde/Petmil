@@ -4,6 +4,7 @@ import "aos/dist/aos.css"
 
 import Navbar from "../components/Navbar"
 import Hero from "../components/Hero"
+import Servicos from "../components/Servicos"
 import Patrocinio from "../components/Patrocinio"
 import Planos from "../components/Planos"
 import Contact from "../components/Contact"
@@ -22,6 +23,7 @@ function Home() {
     <>
       <Navbar />
       <Hero />
+      <Servicos />
       <Patrocinio />
       <Planos />
       <Contact />

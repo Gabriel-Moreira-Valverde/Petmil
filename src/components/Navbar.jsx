@@ -1,58 +1,165 @@
+import { useState } from "react";
+import { useSound } from "../context/SoundContext";
+
+const NAV_ITEMS = [
+  { label: "Inicio", href: "#inicio" },
+  { label: "Servicos", href: "#servicos" },
+  { label: "Patrocinio", href: "#patrocinios" },
+  { label: "Planos", href: "#planos" },
+  { label: "Contato", href: "#contato" },
+];
+
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const { enabled, toggleSound } = useSound();
+
+  const closeMobileMenu = () => setIsOpen(false);
+
   return (
-    <header className="border-b border-white/10 backdrop-blur-md bg-black/12 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6">
-        <nav className="w-full py-4 grid grid-cols-3 items-center">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#191D19]/80 backdrop-blur-xl">
+      <div className="mx-auto max-w-7xl px-6">
+        <nav className="flex h-20 items-center justify-between">
+          <a href="#inicio" className="flex items-center gap-3" onClick={closeMobileMenu}>
+            <img src="/Logo.png" alt="Logo Petmil" className="h-10 w-10" />
+            <span className="select-none text-2xl font-bold tracking-wide text-white">Petmil</span>
+          </a>
 
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <img src="/Logo.png" alt="Logo Petmil" className="w-10 h-10" />
-            <h1 className="text-2xl font-bold text-white tracking-wide select-none">
-              Petmil
-            </h1>
+          <ul className="hidden items-center gap-8 text-sm font-medium text-white/75 lg:flex">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.href} className="group relative">
+                <a href={item.href} className="transition-colors duration-300 hover:text-white">
+                  {item.label}
+                </a>
+                <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-green-500 transition-all duration-300 group-hover:w-full" />
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              data-sound-off
+              onClick={toggleSound}
+              aria-label={enabled ? "Desativar som" : "Ativar som"}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 text-white transition hover:border-white/30 hover:bg-white/5"
+            >
+              {enabled ? (
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
+                  <path
+                    d="M11 6L7.8 9H5v6h2.8L11 18V6Z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M15 9.5C15.8 10.2 16.2 11 16.2 12C16.2 13 15.8 13.9 15 14.5"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M17.8 7.5C19 8.8 19.7 10.3 19.7 12C19.7 13.8 19 15.3 17.8 16.5"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
+                  <path
+                    d="M11 6L7.8 9H5v6h2.8L11 18V6Z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M16.5 10.1L20 13.5"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M20 10.1L16.5 13.5"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              )}
+            </button>
+
+            <div className="hidden lg:flex">
+              <a
+                href="#contato"
+                className="rounded-lg bg-green-600 px-7 py-2 font-semibold text-white shadow-lg transition-all duration-300 hover:bg-white hover:text-green-600 hover:shadow-green-500/30"
+              >
+                Agendar
+              </a>
+            </div>
+
+            <button
+              type="button"
+              aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={isOpen}
+              onClick={() => setIsOpen((prev) => !prev)}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 text-white transition hover:border-white/30 hover:bg-white/5 lg:hidden"
+            >
+              <span className="sr-only">Menu</span>
+              <svg viewBox="0 0 24 24" className="h-5 w-5">
+                {isOpen ? (
+                  <path
+                    d="M6 6L18 18M18 6L6 18"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                ) : (
+                  <path
+                    d="M4 7H20M4 12H20M4 17H20"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                )}
+              </svg>
+            </button>
           </div>
+        </nav>
+      </div>
 
-          {/* Menu */}
-          <ul className="flex justify-center items-center gap-10 text-white/70 text-sm font-medium">
-
-            {[
-              { label: "Início", href: "#inicio" },
-              { label: "Serviços", href: "#servicos" },
-              { label: "Patrocínio", href: "#patrocinios" },
-              { label: "Planos", href: "#planos" },
-              { label: "Contato", href: "#contato" }
-            ].map((item) => (
-              <li key={item.href} className="relative group">
+      <div
+        className={`overflow-hidden border-t border-white/10 transition-all duration-300 lg:hidden ${
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="mx-auto max-w-7xl px-6 py-4">
+          <ul className="space-y-2 text-sm font-medium text-white/85">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.href}>
                 <a
                   href={item.href}
-                  className="hover:text-white transition-colors duration-300"
+                  onClick={closeMobileMenu}
+                  className="block rounded-lg px-3 py-2 transition hover:bg-white/10 hover:text-white"
                 >
                   {item.label}
                 </a>
-
-                {/* Linha animada embaixo */}
-                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-green-600 transition-all duration-300 group-hover:w-full"></span>
               </li>
             ))}
-
           </ul>
 
-          {/* Botão */}
-          <div className="flex justify-end">
-            <button
-              className="bg-green-600 text-white px-7 py-2 rounded-lg
-                         hover:bg-white hover:text-green-600
-                         transition-all duration-300 font-semibold
-                         shadow-lg hover:shadow-green-500/30"
-            >
-              Agendar
-            </button>
-          </div>
-
-        </nav>
+          <a
+            href="#contato"
+            onClick={closeMobileMenu}
+            className="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-green-600 px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-green-500"
+          >
+            Agendar
+          </a>
+        </div>
       </div>
     </header>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

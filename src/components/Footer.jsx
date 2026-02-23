@@ -1,76 +1,88 @@
+const FOOTER_LINKS = [
+  { label: "Inicio", href: "#inicio" },
+  { label: "Servicos", href: "#servicos" },
+  { label: "Patrocinio", href: "#patrocinios" },
+  { label: "Planos", href: "#planos" },
+  { label: "Contato", href: "#contato" },
+];
+
+const SOCIAL_LINKS = [
+  { label: "Instagram", href: "https://instagram.com", icon: "/instagram.svg" },
+  { label: "Facebook", href: "https://facebook.com", icon: "/facebook.svg" },
+  { label: "Twitter", href: "https://twitter.com", icon: "/twitter.svg" },
+];
+
 function Footer() {
-    return (
-        <footer className="text-white">
-            <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-8">
+  const year = new Date().getFullYear();
 
-                {/* Logo / Nome */}
-                <div className="flex gap-3 items-center">
-                    <img src="/Logo.png" alt="Logo Petmil" className="w-10 h-10" />
-                    <h3 className="text-3xl font-semibold">Petmil</h3>
-                </div>
+  return (
+    <footer className="relative overflow-hidden border-t border-white/10 bg-[#0f1410] text-white">
+      <div aria-hidden="true" className="pointer-events-none absolute -left-16 top-6 h-48 w-48 rounded-full bg-green-500/10 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-20 bottom-2 h-56 w-56 rounded-full bg-emerald-400/10 blur-3xl" />
 
-                {/* Navegação */}
-                <nav aria-label="Rodapé">
-                    <ul className="flex flex-wrap justify-center gap-6 text-base">
-                        <li>
-                            <a href="#inicio" className="hover:text-white transition-colors duration-300">
-                                Início
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#patrocinios" className="hover:text-white transition-colors duration-300">
-                                Patrocinios
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#planos" className="hover:text-white transition-colors duration-300">
-                                Planos
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#contato" className="hover:text-white transition-colors duration-300">
-                                Contato
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+      <div className="relative mx-auto max-w-7xl px-6 py-14">
+        <div className="grid gap-12 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
+          <div>
+            <a href="#inicio" className="inline-flex items-center gap-3">
+              <img src="/Logo.png" alt="Logo Petmil" className="h-10 w-10" />
+              <span className="text-2xl font-bold tracking-wide">Petmil</span>
+            </a>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/65">
+              Banho, tosa e bem-estar com atendimento cuidadoso para deixar seu pet limpo, tranquilo e
+              feliz.
+            </p>
+            <a
+              href="#contato"
+              className="mt-6 inline-flex rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-green-500"
+            >
+              Agendar horario
+            </a>
+          </div>
 
-                {/* Redes sociais */}
-                <div className="flex gap-4">
-                    <a href="https://instagram.com" aria-label="Instagram">
-                        <img
-                            src="/instagram.svg"
-                            alt="Instagram"
-                            className="w-5 h-5 opacity-70 hover:opacity-100 transition-opacity duration-300"
-                        />
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/75">Navegacao</h3>
+            <nav aria-label="Rodape" className="mt-4">
+              <ul className="space-y-2.5 text-sm text-white/70">
+                {FOOTER_LINKS.map((item) => (
+                  <li key={item.href}>
+                    <a href={item.href} className="transition-colors duration-300 hover:text-white">
+                      {item.label}
                     </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
 
-                    <a href="https://facebook.com" aria-label="Facebook">
-                        <img
-                            src="/facebook.svg"
-                            alt="Facebook"
-                            className="w-5 h-5 opacity-70 hover:opacity-100 transition-opacity duration-300"
-                        />
-                    </a>
-
-                    <a href="https://twitter.com" aria-label="Twitter">
-                        <img
-                            src="/twitter.svg"
-                            alt="Twitter"
-                            className="w-5 h-5 opacity-70 hover:opacity-100 transition-opacity duration-300"
-                        />
-                        <link rel="stylesheet" href="instagram.com" />
-                    </a>
-                </div>
-
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/75">Redes</h3>
+            <div className="mt-4 flex items-center gap-3">
+              {SOCIAL_LINKS.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-all duration-300 hover:bg-white/20"
+                >
+                  <img src={social.icon} alt={social.label} className="h-4 w-4 opacity-85" />
+                </a>
+              ))}
             </div>
+            <p className="mt-6 text-sm text-white/65">Sao Paulo, Brasil</p>
+            <p className="mt-1 text-sm text-white/65">(11) 99999-9999</p>
+            <p className="mt-1 text-sm text-white/65">contato@petmil.com</p>
+          </div>
+        </div>
 
-            {/* Linha final */}
-            <div className="border-t border-white/10 py-4 text-center text-sm text-white/50">
-                © {new Date().getFullYear()} Petmil. Todos os direitos reservados.
-            </div>
-        </footer>
-    )
+        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-5 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {year} Petmil. Todos os direitos reservados.</p>
+          <p>Feito para pets felizes.</p>
+        </div>
+      </div>
+    </footer>
+  );
 }
 
-export default Footer
+export default Footer;
